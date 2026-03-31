@@ -19,13 +19,10 @@ pipeline {
         }
 
         stage('Stop Existing Containers') {
-            steps {
-                bat '''
-                for /f "tokens=*" %%i in ('docker ps -q') do docker stop %%i
-                for /f "tokens=*" %%i in ('docker ps -aq') do docker rm %%i
-                '''
-            }
-        }
+    steps {
+        bat 'docker rm -f devops-container 2>nul || exit 0'
+    }
+}
 
         stage('Run New Container') {
             steps {
